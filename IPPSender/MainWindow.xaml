@@ -5,8 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IPPSender"
         mc:Ignorable="d"
-        Title="IPP Sender by Derek Hearst" Height="450" Width="800">
-    <Grid>
-		<Label Content="test"/>
-	</Grid>
+        Title="IPP Sender by Derek Hearst" Height="618" Width="1006" Style="{DynamicResource CustomWindowStyle}">
+	<TabControl>
+		<TabItem Header="Printers">
+			<DockPanel>
+				<local:ItemAdder/>
+				<DockPanel>
+					
+				</DockPanel>
+			</DockPanel>
+		</TabItem>
+
+		<TabItem Header="Printing">
+
+		</TabItem>
+
+		<TabItem Header="Automation">
+
+		</TabItem>
+	</TabControl>
 </Window>
