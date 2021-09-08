@@ -7,6 +7,6 @@
         mc:Ignorable="d"
         Title="IPP Sender by Derek Hearst" Height="450" Width="800">
     <Grid>
-        
-    </Grid>
+		<Label Content="test"/>
+	</Grid>
 </Window>
