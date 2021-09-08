@@ -4,15 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
+using System.IO;
+using SharpIpp;
 namespace IPPSender
 {
 	/// <summary>
@@ -20,9 +13,37 @@ namespace IPPSender
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+		DirectoryInfo appdataPath = new(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
+		DirectoryInfo pathToSavePrintersTo = null;
+
 		public MainWindow()
 		{
 			InitializeComponent();
+			pathToSavePrintersTo = appdataPath.CreateSubdirectory("DerekTools").CreateSubdirectory("IPPSender").CreateSubdirectory("Printers");
+			foreach(FileInfo fi in pathToSavePrintersTo.EnumerateFiles())
+			{
+				savedPrintersList.ItemsSource = fi.Name;
+			}
+			
+		}
+
+		private void openPathSavedPrinters_Click(object sender, RoutedEventArgs e)
+		{
+			CommonHelper.OpenPath(pathToSavePrintersTo.FullName);
+		}
+
+		private void addPrinter_Click(object sender, RoutedEventArgs e)
+		{
+			Printer printer = new();
+			savedPrintersList.SelectedItem = Printer.SavePrinter(pathToSavePrintersTo, printer);
+		}
+
+		private void deletePrinter_Click(object sender, RoutedEventArgs e)
+		{
+			foreach(string file in savedPrintersList.Items)
+			{
+				File.Delete(pathToSavePrintersTo +"\\"+ file);
+			}
 		}
 	}
 }

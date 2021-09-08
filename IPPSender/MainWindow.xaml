@@ -9,10 +9,15 @@
 	<TabControl>
 		<TabItem Header="Printers">
 			<DockPanel>
-				<local:ItemAdder/>
 				<DockPanel>
-					
+					<DockPanel DockPanel.Dock="Top">
+						<Button x:Name="openPathSavedPrinters" Content="Open Path" DockPanel.Dock="Right" Click="openPathSavedPrinters_Click" MinWidth="100"/>
+						<Button x:Name="deletePrinter" Content="Delete Printer" DockPanel.Dock="Right" Click="deletePrinter_Click" MinWidth="100"/>
+						<Button x:Name="addPrinter" Content="New Printer" MinWidth="100" Click="addPrinter_Click"/>
+					</DockPanel>
+					<ListBox x:Name="savedPrintersList" DockPanel.Dock="Top" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
 				</DockPanel>
+				
 			</DockPanel>
 		</TabItem>
 
