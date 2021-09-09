@@ -15,9 +15,21 @@
 						<Button x:Name="deletePrinter" Content="Delete Printer" DockPanel.Dock="Right" Click="deletePrinter_Click" MinWidth="100"/>
 						<Button x:Name="addPrinter" Content="New Printer" MinWidth="100" Click="addPrinter_Click"/>
 					</DockPanel>
-					<ListBox x:Name="savedPrintersList" DockPanel.Dock="Top" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+					<ListBox x:Name="savedPrintersList" DockPanel.Dock="Top" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" SelectionChanged="savedPrintersList_SelectionChanged"/>
 				</DockPanel>
-				
+				<StackPanel>
+					<GroupBox Header="Changeable Information" BorderBrush="#FF5C3A3A">
+						<UniformGrid Rows="1">
+							<GroupBox Header="IP Address" >
+								<Label Name="currPrinterIP"/>
+							</GroupBox>
+							<GroupBox Header="Printer Label">
+								<Label Name="currPrinterLabel"/>
+							</GroupBox>
+							<Button x:Name="currPrinterEditValues" Content="Edit Values" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+						</UniformGrid>
+					</GroupBox>
+				</StackPanel>
 			</DockPanel>
 		</TabItem>
 
