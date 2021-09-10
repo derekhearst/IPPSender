@@ -46,7 +46,7 @@ namespace IPPSender
 			}
 			else
 			{
-				MessageBox.Show("Cannot communicate with inputed IP");
+				MessageBox.Show("Cannot communicate with printer. IP Might have changed or printer is off.", "Cannot communicate with printer", MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			doneButton.IsEnabled = true;
 		}

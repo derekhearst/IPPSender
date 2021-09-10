@@ -1,40 +1,161 @@
 ﻿<Window x:Class="IPPSender.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:IPPSender"
-        mc:Ignorable="d"
-        Title="IPP Sender by Derek Hearst" Height="618" Width="1006" Style="{DynamicResource CustomWindowStyle}">
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:local="clr-namespace:IPPSender"
+		mc:Ignorable="d"
+		Title="IPP Sender by Derek Hearst" Height="618" Width="1146" Style="{DynamicResource CustomWindowStyle}">
 	<TabControl>
 		<TabItem Header="Printers">
 			<DockPanel>
 				<DockPanel>
 					<DockPanel DockPanel.Dock="Top">
-						<Button x:Name="openPathSavedPrinters" Content="Open Path" DockPanel.Dock="Right" Click="openPathSavedPrinters_Click" MinWidth="100"/>
-						<Button x:Name="deletePrinter" Content="Delete Printer" DockPanel.Dock="Right" Click="deletePrinter_Click" MinWidth="100"/>
-						<Button x:Name="addPrinter" Content="New Printer" MinWidth="100" Click="addPrinter_Click"/>
+						<Button x:Name="openPathSavedPrinters" Content="Open Path" DockPanel.Dock="Right" Click="openPathSavedPrinters_Click" MinWidth="100" Background="#FF323250"/>
+						<Button x:Name="deletePrinter" Content="Delete Printer" DockPanel.Dock="Right" Click="deletePrinter_Click" MinWidth="100" Background="#FF503232"/>
+						<Button x:Name="addPrinter" Content="New Printer" MinWidth="100" Click="addPrinter_Click" Background="#FF325032"/>
 					</DockPanel>
 					<ListBox x:Name="savedPrintersList" DockPanel.Dock="Top" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" SelectionChanged="savedPrintersList_SelectionChanged"/>
 				</DockPanel>
-				<StackPanel>
-					<GroupBox Header="Changeable Information" BorderBrush="#FF5C3A3A">
-						<UniformGrid Rows="1">
-							<GroupBox Header="IP Address" >
-								<Label Name="currPrinterIP"/>
+				<ScrollViewer VerticalScrollBarVisibility="Auto">
+					<StackPanel>
+						<GroupBox Header="Changeable Information" BorderBrush="#FF503232">
+							<UniformGrid Rows="1">
+								<GroupBox Header="IP Address" >
+									<TextBox Name="currPrinterIP" IsReadOnly="true"/>
+								</GroupBox>
+								<GroupBox Header="Printer Label">
+									<TextBox Name="currPrinterLabel" IsReadOnly="true"/>
+								</GroupBox>
+								<Button x:Name="currPrinterEditValues" Content="Edit IP And Label" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FF325032" Click="currPrinterEditValues_Click" />
+								<Button x:Name="currPrinterRefresh" Content="Refresh Attributes"  Background="#FF325032" Click="currPrinterRefresh_Click"/>
+							</UniformGrid>
+						</GroupBox>
+						<UniformGrid Columns="3">
+							<GroupBox Header="Printer Name">
+								<TextBox Name="currPrinterName" IsReadOnly="true"/>
 							</GroupBox>
-							<GroupBox Header="Printer Label">
-								<Label Name="currPrinterLabel"/>
+							<GroupBox Header="Printer Make and Model">
+								<TextBox Name="currPrinterNameInfo" IsReadOnly="true"/>
 							</GroupBox>
-							<Button x:Name="currPrinterEditValues" Content="Edit Values" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
-						</UniformGrid>
-					</GroupBox>
-				</StackPanel>
+							<GroupBox Header="Printer FW">
+								<TextBox Name="currPrinterFirmware" IsReadOnly="true"/>
+							</GroupBox>
+							<GroupBox Header="Printer PPM">
+								<TextBox Name="currPrinterPPM" IsReadOnly="true"/>
+							</GroupBox>
+							<GroupBox Header="Color Supported">
+								<TextBox Name="currPrinterColorSupported"  IsReadOnly="true"/>
+							</GroupBox>
+							<GroupBox Header="Printer UUID">
+								<TextBox
+									x:Name="currPrinterUUID" IsReadOnly="true"/>
+							</GroupBox>
+							<GroupBox Header="Printer Location">
+								<TextBox x:Name="currPrinterLocation" IsReadOnly="true"/>
+							</GroupBox>
+							<GroupBox Header="Printer State">
+								<TextBox Name="currPrinterState" IsReadOnly="true"/>
+							</GroupBox>
+							<GroupBox Header="Printer Message">
+								<TextBox Name="currPrinterStateMessage" IsReadOnly="true"/>
+							</GroupBox>
+						</UniformGrid>						
+						<GroupBox Header="Printer Supplies">
+							<ListBox x:Name="currPrinterSupplyList" Foreground="White"/>
+						</GroupBox>
+						<GroupBox Header="Supported Job Attributes">
+							<UniformGrid Columns="3">
+								<GroupBox Header="Supported Media" MaxHeight="300">									
+									<ListBox x:Name="currPrinterSupportedMedia"/>																	
+								</GroupBox>
+								<GroupBox Header="Supported Media Source"  MaxHeight="300">
+									<ListBox x:Name="currPrinterSupportedMediaSource"/>
+								</GroupBox>
+								<GroupBox Header="Supported Media Type"  MaxHeight="300">
+									<ListBox x:Name="currPrinterSupportedMediaType"/>
+								</GroupBox>
+								<GroupBox Header="Supported Output Tray"  MaxHeight="300">
+									<ListBox x:Name="currPrinterSupportedOutputTray"/>
+								</GroupBox>
+								<GroupBox Header="Supported Finishings"  MaxHeight="300">
+									<ListBox x:Name="currPrinterSupportedFinishings"/>
+								</GroupBox>
+								<GroupBox Header="Supported Duplexing Options"  MaxHeight="300">
+									<ListBox x:Name="currPrinterSupportedSides"/>
+								</GroupBox>
+							</UniformGrid>
+						</GroupBox>
+					</StackPanel>
+				</ScrollViewer>
+			
 			</DockPanel>
 		</TabItem>
 
 		<TabItem Header="Printing">
+			<DockPanel>
+				<GroupBox DockPanel.Dock="Left" Header="Printers" MinWidth="150" MaxWidth="300">
+					<ListBox Name="printingListPrinters" SelectionChanged="printingListPrinters_SelectionChanged"/>
+				</GroupBox>
 
+				<GroupBox Header="Jobs" MinWidth="150" MaxWidth="400">
+					<DockPanel>
+						<UniformGrid DockPanel.Dock="Bottom" Rows="1">
+							<Button Content="Refresh Jobs" Background="#FF325032" Click="RefreshJobsList"/>
+							<Button  Content="Open Path to Jobs" Background="#FF323250" Click="openPathToJobs"/>
+						</UniformGrid>
+						<ListBox Name="printingListJobs" SelectionMode="Extended"/>
+					</DockPanel>
+				</GroupBox>
+				
+				
+				<GroupBox Header="Print Settings" DockPanel.Dock="Left" MaxWidth="300">
+					<DockPanel>
+						<UniformGrid DockPanel.Dock="Bottom" Columns="2" MinHeight="100">
+							<Button x:Name="printingCancelJobs" Content="Cancel Jobs" Click="printingCancelJobs_Click" Background="#FF503232"/>
+							<Button x:Name="printingPrintJobs" Content="Start Sending Jobs" Click="printingPrintJobs_Click" Background="#FF325032"/>
+						</UniformGrid>
+						
+						<UniformGrid Columns="2" DockPanel.Dock="Top">	
+							<GroupBox Header="Copies" BorderBrush="{x:Null}">
+								<TextBox x:Name="printingCopies" Text="1"/>
+							</GroupBox>
+								
+							<GroupBox Header="Coallate" BorderBrush="{x:Null}">
+								<ComboBox Name="printingCollate"/>
+							</GroupBox>
+
+							<GroupBox Header="Supported Media" BorderBrush="{x:Null}">
+								<ComboBox Name="printingMedia"/>
+							</GroupBox>
+							<GroupBox Header="Supported Paper Attributes" BorderBrush="{x:Null}">
+								<ComboBox Name="printingPaperAttributes"/>
+							</GroupBox>
+
+							<GroupBox Header="Duplexing Options" BorderBrush="{x:Null}">
+								<ComboBox Name="printingDuplex"/>
+							</GroupBox>
+							<GroupBox Header="Finishing" BorderBrush="{x:Null}">
+								<ComboBox Name="printingFinishings"/>
+							</GroupBox>
+
+							<GroupBox Header="Source Tray" BorderBrush="{x:Null}">
+								<ComboBox Name="printingMediaSource"/>
+							</GroupBox>
+							<GroupBox Header="Output Tray" BorderBrush="{x:Null}">
+								<ComboBox Name="printingOutputBin"/>
+							</GroupBox>
+						</UniformGrid>
+						
+					</DockPanel>
+				
+				</GroupBox>
+				
+
+				<GroupBox DockPanel.Dock="Right" Header="Job Status">
+					<ListBox x:Name="printingListActiveJobs"/>
+				</GroupBox>
+			</DockPanel>
 		</TabItem>
 
 		<TabItem Header="Automation">
