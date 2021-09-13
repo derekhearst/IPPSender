@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
 using System.Diagnostics;
-using System.Text.RegularExpressions;
+using System.IO;
+using System.Linq;
 using System.Net;
-using System.Net.NetworkInformation;
 using System.Net.Http;
+using System.Net.NetworkInformation;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 namespace IPPSender
 {
 	class CommonHelper
@@ -53,14 +53,14 @@ namespace IPPSender
 					results.Add($"{path} does not exist.");
 					return results;
 				}
-				foreach(FileInfo file in directory.EnumerateFiles())
+				foreach (FileInfo file in directory.EnumerateFiles())
 				{
 					if (!file.Name.Contains(filter)) { continue; }
 					results.Add(file.Name);
 				}
 				return results;
 			}
-			else if(path.Contains("http"))
+			else if (path.Contains("http"))
 			{
 				results.Add("HTTP Links Not Supported");
 				return results;

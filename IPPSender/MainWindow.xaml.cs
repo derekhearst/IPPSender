@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Collections.ObjectModel;
 namespace IPPSender
 {
 	/// <summary>
@@ -33,7 +33,7 @@ namespace IPPSender
 			mainTimer.Elapsed += MainTimer_Elapsed;
 		}
 
-		
+
 
 		private void openPathSavedPrinters_Click(object sender, RoutedEventArgs e)
 		{
@@ -90,7 +90,7 @@ namespace IPPSender
 			if (e.AddedItems.Count == 0) { return; } //handeling unselection
 			foreach (FileInfo file in pathToSavePrintersTo.EnumerateFiles())
 			{
-				if (file.Name==e.AddedItems[0].ToString()) //getting first item selected
+				if (file.Name == e.AddedItems[0].ToString()) //getting first item selected
 				{
 					currentlyDisplayedPrinter = Printer.ReadFromFile(file);
 					UpdatePrinterDisplayValues(currentlyDisplayedPrinter);
@@ -166,10 +166,10 @@ namespace IPPSender
 
 		private async void printingCancelJobs_Click(object sender, RoutedEventArgs e)
 		{
-			foreach(string file in printingListPrinters.SelectedItems)
+			foreach (string file in printingListPrinters.SelectedItems)
 			{
 				Printer p = Printer.ReadFromFile(new(pathToSavePrintersTo + "\\" + file));
-				if(!await p.CancelJobs())
+				if (!await p.CancelJobs())
 				{
 					MessageBox.Show("Unable To Cancel Jobs", "Error When Cancelling", MessageBoxButton.OK, MessageBoxImage.Error);
 				}
@@ -180,7 +180,7 @@ namespace IPPSender
 		{
 			foreach (string file in printingListPrinters.SelectedItems)
 			{
-				Printer p = Printer.ReadFromFile(new(pathToSavePrintersTo + "\\"+ file));
+				Printer p = Printer.ReadFromFile(new(pathToSavePrintersTo + "\\" + file));
 				printingMedia.ItemsSource = p.IPPSupportedMedia;
 				printingDuplex.ItemsSource = p.IPPSupportedSides;
 				printingMediaSource.ItemsSource = p.IPPSupportedMediaSource;
@@ -212,10 +212,10 @@ namespace IPPSender
 				currentDisplayingJobs.Clear();
 				foreach (PrintJob pj in printedJobs)
 				{
-					currentDisplayingJobs.Insert(0,pj.ToString());
+					currentDisplayingJobs.Insert(0, pj.ToString());
 				}
 			}));
-			
+
 		}
 	}
 }

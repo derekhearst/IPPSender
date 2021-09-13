@@ -1,11 +1,11 @@
-﻿using System;
+﻿using SharpIpp;
+using SharpIpp.Model;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SharpIpp;
-using SharpIpp.Model;
-using System.IO;
 namespace IPPSender
 {
 	class PrintJob
@@ -43,7 +43,7 @@ namespace IPPSender
 		{
 			this.cli = cli;
 			this.PrintReq = PrintReq;
-			
+
 		}
 		override
 		public string ToString()
@@ -87,14 +87,14 @@ namespace IPPSender
 			{
 				return false;
 			}
-			
-			
+
+
 
 		}
 
 		private async void MainTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
 		{
-			if(!await TryRefreshJobDetails())
+			if (!await TryRefreshJobDetails())
 			{
 				mainTimer.Stop();
 			}
@@ -112,11 +112,11 @@ namespace IPPSender
 			{
 				res = await cli.GetJobAttributesAsync(req);
 			}
-			catch(Exception e)
+			catch (Exception e)
 			{
 				System.Diagnostics.Trace.WriteLine(e.Message);
 				return false;
-			} 
+			}
 
 			timebetween.Clear();
 			pagesCompleted.Add(res.JobAttributes.JobImpressionsCompleted.Value);
@@ -147,7 +147,7 @@ namespace IPPSender
 				EndedAt = DateTime.Now;
 				SecondsToComplete = 9999;
 			}
-			if(JobStatus is "Completed" or "Canceled")
+			if (JobStatus is "Completed" or "Canceled")
 			{
 				return false;
 			}

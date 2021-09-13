@@ -1,13 +1,13 @@
-﻿using System;
+﻿using SharpIpp;
+using SharpIpp.Model;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using SharpIpp;
-using SharpIpp.Model;
-using System.Collections.ObjectModel;
 namespace IPPSender
 {
 	class Printer
@@ -32,7 +32,7 @@ namespace IPPSender
 		public string Nickname { get; set; } = "Test";
 
 		Uri IPPUri;
-		public string IP {get;set;}
+		public string IP { get; set; }
 		List<PrintJob> printJobQueue = new();
 		System.Timers.Timer mainTimer = new(5000);
 
@@ -73,7 +73,7 @@ namespace IPPSender
 
 		private async void MainTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
 		{
-			foreach(PrintJob pj in printJobQueue)
+			foreach (PrintJob pj in printJobQueue)
 			{
 				if (pj.HasBeenSent == false)
 				{
@@ -165,20 +165,20 @@ namespace IPPSender
 							if (temp.Contains("level")) { info.percent = int.Parse(temp.Split("=")[1]); }
 							else if (temp.Contains("colorantname")) { info.supplyname = temp.Split("=")[1]; } //the[1] gets the value after the =
 						}
-						IPPSupplyValues.Add(info);						
+						IPPSupplyValues.Add(info);
 						break;
 
 					default:
 						break;
 				}
-				
+
 			}
 			return true;
 		}
 
 		public PrintJob AddToQueue(FileInfo file, PrintJob.JobParams param)
 		{
-			
+
 			List<IppAttribute> ja = new();
 			ja.Add(new IppAttribute(Tag.BegCollection, "media-col", ""));
 			ja.Add(new IppAttribute(Tag.MemberAttrName, "", "media-source"));
@@ -225,7 +225,7 @@ namespace IPPSender
 		public static FileInfo SavePrinter(DirectoryInfo directoryToSaveTo, Printer printerToSave)
 		{
 			string json = JsonSerializer.Serialize(printerToSave);
-			FileInfo file = new(directoryToSaveTo.FullName +"\\" + printerToSave.Nickname);
+			FileInfo file = new(directoryToSaveTo.FullName + "\\" + printerToSave.Nickname);
 			File.WriteAllText(file.FullName, json);
 			return file;
 		}
